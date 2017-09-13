@@ -15,7 +15,11 @@ class CheckSignature
         $timestamp = $_GET['timestamp'];
         $nonce = $_GET['nonce'];
         $signature = $_GET['signature'];
-        $echostr = $_GET['echostr'];
+        if (!empty($_GET['echostr'])) {
+            $echostr = $_GET['echostr'];
+        } else {
+            $echostr = false;
+        }
         //将token、timestamp、nonce三个参数进行字典序排序
         $arr = array($timestamp, $nonce, $token);
         sort($arr);
@@ -25,7 +29,7 @@ class CheckSignature
         if ($temstr == $signature) {
             if ($echostr) {
                 echo $echostr;
-                die;
+                return false;
             }
             else {
                 return true;
